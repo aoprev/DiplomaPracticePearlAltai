@@ -2,14 +2,14 @@ package com.diploma.practice;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.diploma.practice.pages.OzonMainPage;
+import com.diploma.practice.pages.PearlAltaiMainPage;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import static com.diploma.practice.Properties.UI_BASE_URL;
 import static com.diploma.practice.Properties.UI_BROWSER;
 
 public class BaseTestUI {
-       public OzonMainPage mainPage = new OzonMainPage();
+       public PearlAltaiMainPage mainPage = new PearlAltaiMainPage();
 
         @BeforeSuite
         public void setupBrowser() {
@@ -18,8 +18,7 @@ public class BaseTestUI {
         }
 
         @BeforeClass
-        public void openOzonMainPage() {
+        public void openPearlAltaiMainPage() {
             Selenide.open(PropertyReader.getProperty(UI_BASE_URL));
-            mainPage.reloadMainPage();
         }
     }
