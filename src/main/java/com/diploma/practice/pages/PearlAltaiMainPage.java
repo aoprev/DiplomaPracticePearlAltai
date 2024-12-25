@@ -11,6 +11,8 @@ public class PearlAltaiMainPage {
     public SelenideElement returnToMainPageButton = Selenide.$("img[src='/data/files/138.png']");
     public SelenideElement firstProductSection= Selenide.$("a.item-link[href='/catalog/fitosbory-travy-korni']");
     public SelenideElement siteDeveloperLogoLink= Selenide.$("div.quick_link p a[href='https://astro-tech.ru']");
+    public SelenideElement searchField= Selenide.$("form.search-box#search");
+    public SelenideElement mainMenu= Selenide.$("div.nav-main-collapse");
 
     @Step("Wait for PearlAltai main page header and middle part loaded")
     public void waitForPearlAltaiMainPageHeaderAndMiddlePartLoaded() {
@@ -26,5 +28,16 @@ public class PearlAltaiMainPage {
     @Step("Wait for PearlAltai main page footer loaded")
     public void waitForPearlAltaiMainPageFooterLoaded() {
         siteDeveloperLogoLink.shouldBe(Condition.visible, Duration.ofSeconds(8));
+    }
+
+    @Step("Scroll to the main page header")
+    public void scrollToMainPageHeader() {
+        Selenide.executeJavaScript("window.scrollTo(0, 0);");
+    }
+
+    @Step("Wait for navigation elements loaded")
+    public void waitForNavigationElementsLoaded() {
+        searchField.shouldBe(Condition.hidden, Duration.ofSeconds(8));
+        mainMenu.shouldBe(Condition.visible, Duration.ofSeconds(8));
     }
 }

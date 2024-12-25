@@ -23,4 +23,16 @@ public class PearlAltaiMarketRegressTest extends BaseTestUI{
         Assertions.assertThat(mainPage.siteDeveloperLogoLink.exists()).isTrue();
     }
 
+    @Test(description = "Test of successful navigation elements loading", priority = 2)
+    public void testOfNavigationElementsLoading() {
+
+        mainPage.scrollToMainPageHeader();
+
+        mainPage.waitForNavigationElementsLoaded();
+
+        Assertions.assertThat(mainPage.searchField.exists()).isTrue();
+
+        Assertions.assertThat(mainPage.mainMenu.exists()).isTrue();
+    }
+
 }
