@@ -13,7 +13,9 @@ public class PearlAltaiMainPage {
     public SelenideElement searchField= Selenide.$("#search");
     public SelenideElement clickableSearchArea= Selenide.$("input[name='q']");
     public SelenideElement mainMenu= Selenide.$("div.nav-main-collapse");
-    public SelenideElement searchButton= Selenide.$("button.search-box__btn[type='submit']");
+    //public SelenideElement searchButton= Selenide.$("button.search-box__btn[type='submit']");
+    public SelenideElement catalogueButton= Selenide.$("li.dropdown > a.dropdown-toggle[href='/catalog']");
+
 
     public String searchQueryStringValid = "мёд";
     public String searchQueryStringInvalid = "!@&FW%^&&)(*&";
@@ -83,5 +85,15 @@ public class PearlAltaiMainPage {
             System.out.println(clickableSearchArea.getCssValue("visibility"));
             System.out.println(clickableSearchArea.getCssValue("opacity"));
         }
+    }
+
+    @Step("Move to catalogue")
+    public void openCatalogue() {
+        Selenide.executeJavaScript("document.querySelector('img[src=\"/data/files/138.png\"]').scrollIntoView();");
+        Selenide.executeJavaScript("document.querySelector('img[src=\"/data/files/138.png\"]').click();");
+
+        catalogueButton.shouldBe(Condition.visible, Duration.ofSeconds(8));
+        catalogueButton.click();
+
     }
 }
