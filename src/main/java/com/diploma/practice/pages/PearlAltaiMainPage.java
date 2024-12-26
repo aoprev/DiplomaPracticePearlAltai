@@ -5,14 +5,17 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import java.time.Duration;
-import static com.codeborne.selenide.Selenide.*;
 
 public class PearlAltaiMainPage {
     public SelenideElement returnToMainPageButton = Selenide.$("img[src='/data/files/138.png']");
     public SelenideElement firstProductSection= Selenide.$("a.item-link[href='/catalog/fitosbory-travy-korni']");
     public SelenideElement siteDeveloperLogoLink= Selenide.$("div.quick_link p a[href='https://astro-tech.ru']");
-    public SelenideElement searchField= Selenide.$("form.search-box#search");
+    public SelenideElement searchField= Selenide.$("#search");
+    public SelenideElement clickableSearchArea= Selenide.$("input[name='q']");
     public SelenideElement mainMenu= Selenide.$("div.nav-main-collapse");
+    public SelenideElement searchButton= Selenide.$("button.search-box__btn[type='submit']");
+
+    public String searchQueryString = "мёд";
 
     @Step("Wait for PearlAltai main page header and middle part loaded")
     public void waitForPearlAltaiMainPageHeaderAndMiddlePartLoaded() {
@@ -39,5 +42,23 @@ public class PearlAltaiMainPage {
     public void waitForNavigationElementsLoaded() {
         searchField.shouldBe(Condition.hidden, Duration.ofSeconds(8));
         mainMenu.shouldBe(Condition.visible, Duration.ofSeconds(8));
+    }
+
+    @Step("Fill search field and click to searching")
+    public void fillSearchFieldAndClickToSearching() {
+        Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').style.display = 'block';");
+        Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').style.visibility = 'visible';");
+        Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').style.opacity = '1';");
+
+        if(clickableSearchArea.getCssValue("display").equals("block")) {
+            Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').click();");
+            Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').value = arguments[0];", searchQueryString);
+            Selenide.executeJavaScript("document.querySelector('button.search-box__btn[type=\"submit\"]').click();");
+        }
+        else{
+            System.out.println(clickableSearchArea.getCssValue("display"));
+            System.out.println(clickableSearchArea.getCssValue("visibility"));
+            System.out.println(clickableSearchArea.getCssValue("opacity"));
+        }
     }
 }

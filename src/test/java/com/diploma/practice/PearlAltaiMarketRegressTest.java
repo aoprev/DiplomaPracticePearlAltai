@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 
 public class PearlAltaiMarketRegressTest extends BaseTestUI{
     private PearlAltaiMainPage mainPage = new PearlAltaiMainPage();
+    private SearchResultsPage searchResultsPage = new SearchResultsPage();
 
     @Test(description = "Test of successful main paige loading", priority = 1)
     public void testOfSuccessMainPageLoading() {
@@ -33,6 +34,23 @@ public class PearlAltaiMarketRegressTest extends BaseTestUI{
         Assertions.assertThat(mainPage.searchField.exists()).isTrue();
 
         Assertions.assertThat(mainPage.mainMenu.exists()).isTrue();
+    }
+
+    @Test(description = "Test of an item searching", priority = 3)
+    public void testOfItemSearching() {
+
+        mainPage.fillSearchFieldAndClickToSearching();
+
+        searchResultsPage.waitForSearchResultsPageLoaded();
+
+        Assertions.assertThat(searchResultsPage.firstSuccessItem.exists()).isTrue();
+
+        Assertions.assertThat(searchResultsPage.firstSuccessItem.getText()).containsIgnoringCase("мёд");
+
+
+
+
+
     }
 
 }

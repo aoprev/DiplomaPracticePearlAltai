@@ -9,12 +9,12 @@ import static com.diploma.practice.Properties.UI_BASE_URL;
 import static com.diploma.practice.Properties.UI_BROWSER;
 
 public class BaseTestUI {
-       public PearlAltaiMainPage mainPage = new PearlAltaiMainPage();
 
         @BeforeSuite
         public void setupBrowser() {
             Configuration.browser = PropertyReader.getProperty(UI_BROWSER);
             Configuration.browserSize = "1280x720";
+
         }
 
         @BeforeClass
