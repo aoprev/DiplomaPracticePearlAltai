@@ -15,7 +15,8 @@ public class PearlAltaiMainPage {
     public SelenideElement mainMenu= Selenide.$("div.nav-main-collapse");
     public SelenideElement searchButton= Selenide.$("button.search-box__btn[type='submit']");
 
-    public String searchQueryString = "мёд";
+    public String searchQueryStringValid = "мёд";
+    public String searchQueryStringInvalid = "!@&FW%^&&)(*&";
 
     @Step("Wait for PearlAltai main page header and middle part loaded")
     public void waitForPearlAltaiMainPageHeaderAndMiddlePartLoaded() {
@@ -44,15 +45,37 @@ public class PearlAltaiMainPage {
         mainMenu.shouldBe(Condition.visible, Duration.ofSeconds(8));
     }
 
-    @Step("Fill search field and click to searching")
-    public void fillSearchFieldAndClickToSearching() {
+    @Step("Fill search field by valid data and click to searching")
+    public void fillSearchFieldByValidDataAndClickToSearching() {
         Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').style.display = 'block';");
         Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').style.visibility = 'visible';");
         Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').style.opacity = '1';");
 
         if(clickableSearchArea.getCssValue("display").equals("block")) {
             Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').click();");
-            Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').value = arguments[0];", searchQueryString);
+            Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').value = arguments[0];", searchQueryStringValid);
+            Selenide.executeJavaScript("document.querySelector('button.search-box__btn[type=\"submit\"]').click();");
+        }
+        else{
+            System.out.println(clickableSearchArea.getCssValue("display"));
+            System.out.println(clickableSearchArea.getCssValue("visibility"));
+            System.out.println(clickableSearchArea.getCssValue("opacity"));
+        }
+    }
+
+    @Step("Fill search field by invalid data and click to searching")
+    public void fillSearchFieldByInvalidDataAndClickToSearching() {
+
+        Selenide.executeJavaScript("document.querySelector('img[src=\"/data/files/138.png\"]').scrollIntoView();");
+        Selenide.executeJavaScript("document.querySelector('img[src=\"/data/files/138.png\"]').click();");
+
+        Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').style.display = 'block';");
+        Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').style.visibility = 'visible';");
+        Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').style.opacity = '1';");
+
+        if(clickableSearchArea.getCssValue("display").equals("block")) {
+            Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').click();");
+            Selenide.executeJavaScript("document.querySelector('input[name=\"q\"]').value = arguments[0];", searchQueryStringInvalid);
             Selenide.executeJavaScript("document.querySelector('button.search-box__btn[type=\"submit\"]').click();");
         }
         else{

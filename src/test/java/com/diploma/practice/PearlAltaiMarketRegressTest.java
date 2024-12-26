@@ -39,17 +39,21 @@ public class PearlAltaiMarketRegressTest extends BaseTestUI{
     @Test(description = "Test of an item searching", priority = 3)
     public void testOfItemSearching() {
 
-        mainPage.fillSearchFieldAndClickToSearching();
+        mainPage.fillSearchFieldByValidDataAndClickToSearching();
 
-        searchResultsPage.waitForSearchResultsPageLoaded();
+        searchResultsPage.waitForSuccessSearchResultsPageLoaded();
 
         Assertions.assertThat(searchResultsPage.firstSuccessItem.exists()).isTrue();
 
         Assertions.assertThat(searchResultsPage.firstSuccessItem.getText()).containsIgnoringCase("мёд");
 
+        mainPage.fillSearchFieldByInvalidDataAndClickToSearching();
 
+        searchResultsPage.waitForFailSearchResultsPageLoaded();
 
+        Assertions.assertThat(searchResultsPage.emptyItem.exists()).isTrue();
 
+        Assertions.assertThat(searchResultsPage.emptyItem.getText()).containsIgnoringCase("По вашему запросу ничего не найдено");
 
     }
 
