@@ -10,6 +10,7 @@ public class PearlAltaiMarketRegressTest extends BaseTestUI{
     private final CataloguePage cataloguePage = new CataloguePage();
     private final HornProductsPage hornProductsPage = new HornProductsPage();
     private final HornItemPage hornItemPage = new HornItemPage();
+    private final CartPage cartPage = new CartPage();
 
     @Test(description = "Test of successful main paige loading", priority = 1)
     public void testOfSuccessMainPageLoading() {
@@ -51,6 +52,17 @@ public class PearlAltaiMarketRegressTest extends BaseTestUI{
         Assertions.assertThat(hornItemPage.itemDescriptionSection.exists()).isTrue();
         Assertions.assertThat(hornItemPage.itemPriceSection.exists()).isTrue();
         Assertions.assertThat(hornItemPage.itemImage.exists()).isTrue();
+    }
+
+    @Test(description = "Test of placing a product to the cart", priority = 5)
+    public void testOfPlacingProductToTheCart(){
+        hornItemPage.addItemToCart();
+        hornItemPage.openTheCartModal();
+        cartPage.openTheCartPage();
+
+        cartPage.waitAddedProductIcon();
+
+        Assertions.assertThat(cartPage.addedProductIcon.exists()).isTrue();
     }
 
 }

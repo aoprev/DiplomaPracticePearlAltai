@@ -13,6 +13,7 @@ public class HornItemPage {
     public SelenideElement itemDescriptionSection = Selenide.$("div.description[itemprop='description']");
     public SelenideElement itemPriceSection = Selenide.$("div.price");
     public SelenideElement itemImage = Selenide.$("#photo-cover");
+    public SelenideElement cartButton = Selenide.$("#shoping-cart");
 
     @Step("Check the presence of elements on the horn item page")
     public void waitPresenceOfItemElements(){
@@ -21,4 +22,15 @@ public class HornItemPage {
         itemPriceSection.shouldBe(Condition.visible, Duration.ofSeconds(8));
         itemImage.shouldBe(Condition.visible, Duration.ofSeconds(8));
     }
+
+    @Step("Add the item to cart")
+    public void addItemToCart(){
+        addItemToCartButton.click();
+    }
+
+    @Step("Open the cart modal")
+    public void openTheCartModal(){
+        cartButton.click();
+    }
+
 }
