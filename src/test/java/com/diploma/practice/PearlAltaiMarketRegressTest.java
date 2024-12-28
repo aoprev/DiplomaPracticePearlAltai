@@ -7,6 +7,9 @@ import org.testng.annotations.Test;
 public class PearlAltaiMarketRegressTest extends BaseTestUI{
     private final PearlAltaiMainPage mainPage = new PearlAltaiMainPage();
     private final SearchResultsPage searchResultsPage = new SearchResultsPage();
+    private final CataloguePage cataloguePage = new CataloguePage();
+    private final HornProductsPage hornProductsPage = new HornProductsPage();
+    private final HornItemPage hornItemPage = new HornItemPage();
 
     @Test(description = "Test of successful main paige loading", priority = 1)
     public void testOfSuccessMainPageLoading() {
@@ -40,9 +43,14 @@ public class PearlAltaiMarketRegressTest extends BaseTestUI{
 
     @Test(description = "Test of an product page display", priority = 4)
     public void testOfProductPageDisplay() {
-
         mainPage.openCatalogue();
-
+        cataloguePage.openACatalogueSection();
+        hornProductsPage.openHornItemPage();
+        hornItemPage.waitPresenceOfItemElements();
+        Assertions.assertThat(hornItemPage.addItemToCartButton.exists()).isTrue();
+        Assertions.assertThat(hornItemPage.itemDescriptionSection.exists()).isTrue();
+        Assertions.assertThat(hornItemPage.itemPriceSection.exists()).isTrue();
+        Assertions.assertThat(hornItemPage.itemImage.exists()).isTrue();
     }
 
 }
