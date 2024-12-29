@@ -8,7 +8,6 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-
 group = "com.libertex"
 version = "1.0-SNAPSHOT"
 
@@ -17,7 +16,6 @@ repositories {
 }
 
 dependencies {
-    //implementation("org.testng:testng:7.8.0")
     implementation("org.testng:testng:7.10.2")
     implementation("org.slf4j:slf4j-api:2.0.9")
     testImplementation("org.slf4j:slf4j-simple:2.0.9")
@@ -26,9 +24,7 @@ dependencies {
     runtimeOnly("org.aspectj:aspectjweaver:1.9.20.1")
     implementation('io.qameta.allure:allure-okhttp3:2.21.0')
     testImplementation('org.assertj:assertj-core:3.24.2')
-    //implementation("com.codeborne:selenide:7.0.4")
     implementation("com.codeborne:selenide:7.6.0")
-    //implementation 'com.codeborne:selenide:7.5.1' 6 19 0
 }
 
 allure {

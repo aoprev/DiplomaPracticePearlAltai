@@ -4,9 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-
 import java.time.Duration;
-
 import static com.codeborne.selenide.Selenide.sleep;
 
 public class CartPage {
@@ -17,11 +15,12 @@ public class CartPage {
     public SelenideElement quantityArea = Selenide.$("input[type='text'][name='quantity\\[7858\\]'].form-control");
     public SelenideElement totalAmountArea = Selenide.$x("//div[@class='table-total']//table[@class='table']//tr//td[contains(text(),'Итого')]/following-sibling::td/strong");
     public SelenideElement submitOrderButton = Selenide.$("input[type='submit'][value='Оформить заказ']");
-
+    public SelenideElement clearCartButton = Selenide.$("button[type='button'][title='Очистить корзину']");
+    public SelenideElement emptyCartMessage = Selenide.$("#page-cart p");
 
     @Step("Open the cart page")
     public void openTheCartPage(){
-        sleep(7000);
+        sleep(5000);
         Selenide.executeJavaScript("document.querySelector(\"a[href='/cart']\").style.display = 'block';");
         Selenide.executeJavaScript("document.querySelector(\"a[href='/cart']\").style.visibility = 'visible';");
         Selenide.executeJavaScript("document.querySelector(\"a[href='/cart']\").style.opacity = '1';");
@@ -38,15 +37,15 @@ public class CartPage {
 
     @Step("Wait added to the cart product")
     public void waitAddedProductIcon(){
-        addedProductIcon.shouldBe(Condition.visible, Duration.ofSeconds(8));
+        addedProductIcon.shouldBe(Condition.visible, Duration.ofSeconds(7));
     }
 
     @Step("Click plus item button")
     public void clickPlusButton(){
         plusProductButton.scrollTo();
-        sleep(3000);
+        sleep(2000);
         plusProductButton.click();
-        sleep(5000);
+        sleep(2000);
     }
 
     @Step("Get amount of product value")
@@ -57,14 +56,12 @@ public class CartPage {
 
     @Step("Set visibility of total price element")
     public void setVisibilityOfTotalPrice(){
-        sleep(10000);
-
+        sleep(5000);
         Selenide.executeJavaScript(
                 "arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible'; arguments[0].style.opacity = '1';",
                 totalAmountArea);
 
-        totalAmountArea.shouldBe(Condition.visible, Duration.ofSeconds(10));
-
+        totalAmountArea.shouldBe(Condition.visible, Duration.ofSeconds(7));
         System.out.println("Display: " + totalAmountArea.getCssValue("display"));
         System.out.println("Visibility: " + totalAmountArea.getCssValue("visibility"));
         System.out.println("Opacity: " + totalAmountArea.getCssValue("opacity"));
@@ -93,5 +90,16 @@ public class CartPage {
         submitOrderButton.click();
     }
 
+    @Step("Clear the cart")
+    public void clearTheCart(){
+        clearCartButton.scrollTo();
+        clearCartButton.click();
+        emptyCartMessage.shouldBe(Condition.visible, Duration.ofSeconds(5));
+    }
 
+    @Step("Get text from empty cart element")
+    public String getEmptyCartText() {
+        emptyCartMessage.shouldBe(Condition.visible, Duration.ofSeconds(5));
+        return emptyCartMessage.getText();
+    }
 }

@@ -10,10 +10,11 @@ public class PearlAltaiMarketRegressTest extends BaseTestUI{
     private final CataloguePage cataloguePage = new CataloguePage();
     private final HornProductsPage hornProductsPage = new HornProductsPage();
     private final HornItemPage hornItemPage = new HornItemPage();
-    private final CartPage cartPage = new CartPage();
+    public CartPage cartPage = new CartPage();
     private final SubmitOrderPage submitOrderPage = new SubmitOrderPage();
     private String plusPrice = "394р.";
     private String minusPrice = "197р.";
+    private String emptyCartText = "Ваша корзина пуста!";
 
     @Test(description = "Test of successful main paige loading", priority = 1)
     public void testOfSuccessMainPageLoading() {
@@ -71,10 +72,16 @@ public class PearlAltaiMarketRegressTest extends BaseTestUI{
         cartPage.clickMinusButton();
         Assertions.assertThat(cartPage.getProductAmount()).isEqualTo("1");
         Assertions.assertThat(cartPage.getTotalPrice()).isEqualTo(minusPrice);
-
         cartPage.clickSubmitOrderButton();
-
         submitOrderPage.waitSubmitOrderPageLoaded();
     }
 
+    @Test(description = "Test of removing item from the cart", priority = 6)
+    public void testOfRemovingItemFromTheCart(){
+        submitOrderPage.scrollToAndOpenTheCartModal();
+        submitOrderPage.returnToTheCart();
+        cartPage.clearTheCart();
+        Assertions.assertThat(cartPage.emptyCartMessage.exists()).isTrue();
+        Assertions.assertThat(cartPage.getEmptyCartText()).isEqualTo(emptyCartText);
+    }
 }

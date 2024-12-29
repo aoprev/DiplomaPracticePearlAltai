@@ -13,12 +13,12 @@ public class SearchResultsPage {
     @Step("Wait for success search results page loaded")
     public void waitForSuccessSearchResultsPageLoaded() {
         firstSuccessItem.scrollTo();
-        firstSuccessItem.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        firstSuccessItem.shouldBe(Condition.visible, Duration.ofSeconds(7));
     }
 
     @Step("Wait for fail search results page loaded")
     public void waitForFailSearchResultsPageLoaded() {
         emptyItem.scrollTo();
-        emptyItem.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        emptyItem.shouldBe(Condition.visible, Duration.ofSeconds(7));
     }
 }
